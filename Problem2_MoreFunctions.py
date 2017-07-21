@@ -17,35 +17,40 @@
 from matplotlib import pyplot as plt
 from astroML.datasets import fetch_dr7_quasar
 
-#----------------------------------------------------------------------
-# This function adjusts matplotlib settings for a uniform feel in the textbook.
-# Note that with usetex=True, fonts are rendered with LaTeX.  This may
-# result in an error if LaTeX is not installed on your system.  In that case,
-# you can set usetex to False.
-from astroML.plotting import setup_text_plots
-setup_text_plots(fontsize=8, usetex=True)
+def plot_quasars(markr='.', markrsz=2, ls='none', col='black'):
 
-#------------------------------------------------------------
-# Fetch the quasar data
-data = fetch_dr7_quasar()
+    #----------------------------------------------------------------------
+    # This function adjusts matplotlib settings for a uniform feel in the textbook.
+    # Note that with usetex=True, fonts are rendered with LaTeX.  This may
+    # result in an error if LaTeX is not installed on your system.  In that case,
+    # you can set usetex to False.
+    from astroML.plotting import setup_text_plots
+    setup_text_plots(fontsize=8, usetex=True)
 
-# select the first 10000 points
-data = data[:10000]
+    #------------------------------------------------------------
+    # Fetch the quasar data
+    data = fetch_dr7_quasar()
 
-r = data['mag_r']
-i = data['mag_i']
-z = data['redshift']
+    # select the first 10000 points
+    data = data[:10000]
 
-#------------------------------------------------------------
-# Plot the quasar data
-fig, ax = plt.subplots(figsize=(5, 3.75))
-ax.plot(z, r - i, marker='.', markersize=2, linestyle='none', color='black')
+    r = data['mag_r']
+    i = data['mag_i']
+    z = data['redshift']
 
-ax.set_xlim(0, 5)
-ax.set_ylim(-0.5, 1.0)
+    #------------------------------------------------------------
+    # Plot the quasar data
+    fig, ax = plt.subplots(figsize=(5, 3.75))
+    ax.plot(z, r - i, marker=markr, markersize=markrsz, linestyle=ls, color=col)
 
-ax.set_xlabel(r'${\rm redshift}$')
-ax.set_ylabel(r'${\rm r-i}$')
-fig.savefig("problem2.png")
+    ax.set_xlim(0, 5)
+    ax.set_ylim(-0.5, 1.0)
+
+    ax.set_xlabel(r'${\rm redshift}$')
+    ax.set_ylabel(r'${\rm r-i}$')
+    fig.savefig(str(markr)+str(markrsz)+str(ls)+str(col)+'.png')
 
 
+plot_quasars()
+plot_quasars('*',3,'none','purple')
+plot_quasars('s',1,'dotted','blue')
